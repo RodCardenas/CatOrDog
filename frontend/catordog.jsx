@@ -9,12 +9,14 @@ var hashHistory = ReactRouter.hashHistory;
 // var Modal = require('react-modal');
 
 var Landing = require('./components/landing.jsx');
+var NavMenu = require('./components/navmenu.jsx');
+var EntriesIndex = require('./components/entriesIndex.jsx');
 
 var App = React.createClass({
   render: function(){
     return (
         <div className="single-page-application-container">
-          "Here"
+          <NavMenu />
           <div className="page-content">
             {this.props.children}
           </div>
@@ -24,7 +26,10 @@ var App = React.createClass({
 });
 
 var routes = (
-  <Route path="/" component={App} />
+  <Route path="/" component={App} >
+    <IndexRoute component={Landing} />
+    <Route path="/guesses" component={EntriesIndex} />
+  </Route>
 );
 
 document.addEventListener('DOMContentLoaded', function(){
