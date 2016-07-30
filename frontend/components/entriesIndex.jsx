@@ -2,6 +2,8 @@ var React = require('react');
 var EntryStore = require('../stores/entryStore');
 var EntryUtil = require('../util/entryUtil');
 
+//TODO: Implement delete entry and update entry mechanisms.
+
 var EntriesIndex = React.createClass({
   contextTypes: {
     router: React.PropTypes.object.isRequired
@@ -52,7 +54,7 @@ var EntriesIndex = React.createClass({
     this.setState({newCatLover:event.target.checked});
   },
 
-  render: function(){
+  displayEntries: function(){
     var self = this;
     var keys = Object.keys(this.state.entries);
 
@@ -82,9 +84,14 @@ var EntriesIndex = React.createClass({
           </li>
         );
       });
-    }
 
-    keys = Object.keys(this.state.errors);
+      return entries;
+    }
+  },
+
+  displayErrors: function(){
+    var self = this;
+    var keys = Object.keys(this.state.errors);
 
     if(keys.length > 0){
       var errors = keys.map(function(key){
@@ -96,23 +103,20 @@ var EntriesIndex = React.createClass({
           </li>
         );
       });
-    }
 
+      return errors;
+    }
+  },
+
+  displayNewEntryForm: function(){
     if(this.state.newCatLover){
       var newPet = "🐱";
     } else {
       newPet = "🐶";
     }
-    return (
-      <div className="entires-index-container">
-        <h1>Entries Index</h1>
-        <ol className="entries-index">
-          {entries}
-        </ol>
-        <ul className="errors">
-          {errors}
-        </ul>
-        <br />
+
+    return(
+      <div className="new-entry-form">
         <label>Name:
           <input
             type="text"
@@ -148,6 +152,22 @@ var EntriesIndex = React.createClass({
         </label>
         <br/>
         <button onClick={this.addEntry}>Add Entry</button>
+      </div>
+    );
+  },
+
+  render: function(){
+    return (
+      <div className="entires-index-container">
+        <h1>Entries Index</h1>
+        <ol className="entries-index">
+          {this.displayEntries()}
+        </ol>
+        <ul className="errors">
+          {this.displayErrors()}
+        </ul>
+        <br />
+        {this.displayNewEntryForm()}
       </div>
     );
   }
