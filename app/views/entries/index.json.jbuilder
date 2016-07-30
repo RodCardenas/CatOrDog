@@ -1,1 +1,3 @@
-json.array! @entries, partial: 'entries/entry', as: :entry
+json.array!(@entries) do |entry|
+  json.extract! entry, :id, :name, :weight, :height, :catLover
+end

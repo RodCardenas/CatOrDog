@@ -4,8 +4,26 @@
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
-one: {}
-# column: value
-#
-two: {}
-#  column: value
+one:
+  name: "Rod",
+  height: 71,
+  weight: 178,
+  catLover: false
+
+two:
+  name: "Daf",
+  height: 64,
+  weight: 120,
+  catLover: true
+
+three:
+  name: "Mom",
+  height: 62,
+  weight: 140,
+  catLover: true
+
+four:
+  name: "Dad",
+  height: 69,
+  weight: 170,
+  catLover: false

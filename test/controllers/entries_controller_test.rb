@@ -11,11 +11,6 @@ class EntriesControllerTest < ActionController::TestCase
     assert_not_nil assigns(:entries)
   end
 
-  test "should get new" do
-    get :new
-    assert_response :success
-  end
-
   test "should create entry" do
     assert_difference('Entry.count') do
       post :create, entry: {  }
@@ -26,11 +21,6 @@ class EntriesControllerTest < ActionController::TestCase
 
   test "should show entry" do
     get :show, id: @entry
-    assert_response :success
-  end
-
-  test "should get edit" do
-    get :edit, id: @entry
     assert_response :success
   end
 

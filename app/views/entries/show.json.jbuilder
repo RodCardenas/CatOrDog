@@ -1,1 +1,1 @@
-json.partial! "entries/entry", entry: @entry
+  json.extract! @entry, :id, :name, :weight, :height, :catLover

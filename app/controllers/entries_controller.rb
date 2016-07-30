@@ -1,5 +1,5 @@
 class EntriesController < ApplicationController
-  before_action :set_entry, only: [:show, :edit, :update, :destroy]
+  before_action :set_entry, only: [:show, :update, :destroy]
 
   # GET /entries.json
   def index
@@ -10,36 +10,25 @@ class EntriesController < ApplicationController
   def show
   end
 
-  # GET /entries/new
-  def new
-    @entry = Entry.new
-  end
-
-  # GET /entries/1/edit
-  def edit
-  end
-
   # POST /entries.json
   def create
     @entry = Entry.new(entry_params)
 
-    respond_to do |format|
-      if @entry.save
-        format.json { render :show, status: :created, location: @entry }
-      else
-        format.json { render json: @entry.errors, status: :unprocessable_entity }
-      end
+    if @entry.save
+      render :show, status: :ok
+    else
+      @errors = @entry.errors.full_messages
+      render "shared/errors", status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /entries/1.json
   def update
-    respond_to do |format|
-      if @entry.update(entry_params)
-        format.json { render :show, status: :ok, location: @entry }
-      else
-        format.json { render json: @entry.errors, status: :unprocessable_entity }
-      end
+    if @entry.update_attributes(entry_params)
+      render :show, status: :ok
+    else
+      @errors = @entry.errors.full_messages
+      render "shared/errors", status: :unprocessable_entity
     end
   end
 

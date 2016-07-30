@@ -38,6 +38,7 @@ module.exports = {
   },
 
   handleError: function(error) {
+    console.log(error);
     AppDispatcher.dispatch({
       actionType: EntryConstants.ENTRY_ERROR,
       errors: error.responseJSON.errors

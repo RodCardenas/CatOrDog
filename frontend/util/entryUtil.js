@@ -4,7 +4,7 @@ module.exports =  {
   createEntry: function(details){
     $.ajax({
       method: 'POST',
-      url: '/api/entries',
+      url: '/entries',
       data: {entry: details},
       success: function(entry){
         EntryActions.addEntry(entry);
@@ -18,7 +18,7 @@ module.exports =  {
   fetchEntry: function(id){
     $.ajax({
       method: 'GET',
-      url: '/api/entries/' + id,
+      url: '/entries/' + id,
       success: function(entry){
         EntryActions.foundEntry(entry);
       },
@@ -31,7 +31,7 @@ module.exports =  {
   fetchAllEntries: function(){
     $.ajax({
       method: 'GET',
-      url: '/api/entries',
+      url: '/entries',
       success: function(entries){
         EntryActions.getAllEntries(entries);
       },
@@ -44,7 +44,7 @@ module.exports =  {
   deleteEntry: function(id){
     $.ajax({
       method: 'DELETE',
-      url: 'api/entries/' + id,
+      url: '/entries/' + id,
       success: function(entry){
         EntryActions.removeEntry(entry);
       },
@@ -57,7 +57,7 @@ module.exports =  {
   updateEntry: function(id, details){
     $.ajax({
       method: 'PATCH',
-      url: '/api/entries/' + id,
+      url: '/entries/' + id,
       data: {entry: details},
       success: function(entry){
         EntryActions.modifyEntry(entry);
