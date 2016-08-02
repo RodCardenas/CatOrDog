@@ -37,8 +37,14 @@ module.exports = {
     });
   },
 
+  euclidianDistance: function(guess){
+    AppDispatcher.dispatch({
+      actionType: EntryConstants.EUCLIDIAN,
+      guess: guess
+    });
+  },
+
   handleError: function(error) {
-    console.log(error);
     AppDispatcher.dispatch({
       actionType: EntryConstants.ENTRY_ERROR,
       errors: error.responseJSON.errors

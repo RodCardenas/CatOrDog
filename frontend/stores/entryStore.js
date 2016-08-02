@@ -4,6 +4,7 @@ var EntryConstants = require('../constants/entryConstants');
 
 var _entries = {};
 var _errors = [];
+var _guesses = {};
 var EntryStore = new Store(AppDispatcher);
 
 EntryStore.all = function () {
@@ -16,6 +17,10 @@ EntryStore.find = function(id){
 
 EntryStore.getErrors = function(){
   return  _errors.slice(0);
+};
+
+EntryStore.getEuclidianGuess = function(){
+  return _guesses["euclidian"];
 };
 
 var resetEntries = function(entries){
@@ -36,6 +41,10 @@ var updateEntry = function(entry){
 
 var resetErrors = function(errors){
   _errors = errors;
+};
+
+var setEuclidianGuess = function(guess){
+  _guesses["euclidian"] = guess.catLover;
 };
 
 
@@ -63,6 +72,11 @@ EntryStore.__onDispatch = function (payload) {
 
     case EntryConstants.ENTRY_MODIFIED:
       updateEntry(payload.entry);
+      EntryStore.__emitChange();
+      break;
+
+    case EntryConstants.EUCLIDIAN:
+      setEuclidianGuess(payload.guess);
       EntryStore.__emitChange();
       break;
 

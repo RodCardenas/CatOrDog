@@ -38,6 +38,14 @@ class EntriesController < ApplicationController
     render json: @entry
   end
 
+  def euclidian
+    @result = Entry.eucladianDistanceGuess(
+      params[:entry][:height],
+      params[:entry][:weight]
+    )
+    render json: {catLover: @result}
+  end
+
   private
     def set_entry
       @entry = Entry.find(params[:id])

@@ -1,4 +1,6 @@
 var React = require('react');
+var EntryStore = require('../stores/entryStore');
+var EntryUtil = require('../util/entryUtil');
 
 var Landing = React.createClass({
   contextTypes: {
@@ -6,7 +8,15 @@ var Landing = React.createClass({
   },
 
   getInitialState: function(){
-    return {newHeight:"", newWeight:""};
+    return {newHeight:"", newWeight:"", euclidian:""};
+  },
+
+  componentDidMount: function(){
+    this.entryStoreListener = EntryStore.addListener(this.onChange);
+  },
+
+  componentWillUnmount: function(){
+    this.entryStoreListener.remove();
   },
 
   heightChange: function(event){
@@ -24,6 +34,38 @@ var Landing = React.createClass({
 
   getGuesses: function(event){
     event.preventDefault();
+    EntryUtil.fetchEuclidianDistance({
+      height:this.state.newHeight,
+      weight:this.state.newWeight
+    });
+  },
+
+  euclidianGuess: function(){
+    console.log(this.state.euclidian);
+    if(this.state.euclidian === ""){
+      return <div />;
+    } else if (this.state.euclidian) {
+      var newPet = "🐱";
+    } else {
+      newPet = "🐶";
+    }
+
+    return (
+      <label>You are a
+        <input
+          type="checkbox"
+          checked={this.state.euclidian}
+          className="euclidianGuess"
+          style={{display:"none"}}
+          readOnly />
+        <span className="pet"> {newPet} </span>
+        lover!
+      </label>
+    );
+  },
+
+  onChange: function(){
+    this.setState({euclidian: EntryStore.getEuclidianGuess("euclidian")});
   },
 
   render: function(){
@@ -52,14 +94,16 @@ var Landing = React.createClass({
               className="newWeight" />
           </label>
           <br/>
-          <button onClick={this.getGuess}>Get Guesses!</button>
+          <button onClick={this.getGuesses}>Get Guesses!</button>
         </div>
 
         <h2>Summary</h2>
         <h3>Eucladian Distance</h3>
         <p>
-          Based on a direct relation between  height and weight of users.
+          Based on a direct relation between height and weight of users:
         </p>
+        {this.euclidianGuess()}
+
         <h3>Pearson Distance</h3>
         <button onClick={this.goToNewEntry}>Add More Entries</button>
       </div>

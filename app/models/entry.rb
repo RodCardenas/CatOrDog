@@ -17,12 +17,14 @@ class Entry < ActiveRecord::Base
   MAX_HEIGHT = 10
   MAX_WEIGHT = 500
 
-  def eucladianDistanceGuess
-    entries = Entry.all
-    entries.each do |entry|
-      entry.height = height / MAX_HEIGHT
-      entry.weight = weight / MAX_WEIGHT
-    end
+  def self.eucladianDistanceGuess(height, weight)
+    puts "here"
+    # entries = Entry.all
+    # entries.each do |entry|
+    #   entry.height = height / MAX_HEIGHT
+    #   entry.weight = weight / MAX_WEIGHT
+    # end
+    height.to_i > 5 ? true : false
   end
 
   # def sim_distance(prefs,person1,person2):

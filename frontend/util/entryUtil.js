@@ -66,6 +66,19 @@ module.exports =  {
         EntryActions.handleError(error);
       }
     });
-  }
+  },
 
+  fetchEuclidianDistance: function(details){
+    $.ajax({
+      method: 'GET',
+      url: '/guess',
+      data: {entry: details},
+      success: function(guess){
+        EntryActions.euclidianDistance(guess);
+      },
+      error: function(error){
+        EntryActions.handleError(error);
+      }
+    });
+  }
 };
