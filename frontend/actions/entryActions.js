@@ -44,6 +44,13 @@ module.exports = {
     });
   },
 
+  pearsonCorrelationScore: function(guess){
+    AppDispatcher.dispatch({
+      actionType: EntryConstants.PEARSON,
+      guess: guess
+    });
+  },
+
   handleError: function(error) {
     AppDispatcher.dispatch({
       actionType: EntryConstants.ENTRY_ERROR,

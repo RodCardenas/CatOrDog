@@ -19,8 +19,8 @@ EntryStore.getErrors = function(){
   return  _errors.slice(0);
 };
 
-EntryStore.getEuclidianGuess = function(){
-  return _guesses["euclidian"];
+EntryStore.getGuesses = function(){
+  return Object.assign({}, _guesses);
 };
 
 var resetEntries = function(entries){
@@ -45,6 +45,10 @@ var resetErrors = function(errors){
 
 var setEuclidianGuess = function(guess){
   _guesses["euclidian"] = guess.catLover;
+};
+
+var setPearsonGuess = function(guess){
+  _guesses["pearson"] = guess.catLover;
 };
 
 
@@ -77,6 +81,11 @@ EntryStore.__onDispatch = function (payload) {
 
     case EntryConstants.EUCLIDIAN:
       setEuclidianGuess(payload.guess);
+      EntryStore.__emitChange();
+      break;
+
+    case EntryConstants.PEARSON:
+      setPearsonGuess(payload.guess);
       EntryStore.__emitChange();
       break;
 

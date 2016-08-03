@@ -8,7 +8,7 @@ var Landing = React.createClass({
   },
 
   getInitialState: function(){
-    return {newHeight:"", newWeight:"", euclidian:""};
+    return {newHeight:"", newWeight:"", euclidian:"", pearson:""};
   },
 
   componentDidMount: function(){
@@ -38,10 +38,14 @@ var Landing = React.createClass({
       height:this.state.newHeight,
       weight:this.state.newWeight
     });
+
+    EntryUtil.fetchPearsonCorrelationScore({
+      height:this.state.newHeight,
+      weight:this.state.newWeight
+    });
   },
 
   euclidianGuess: function(){
-    console.log(this.state.euclidian);
     if(this.state.euclidian === ""){
       return <div />;
     } else if (this.state.euclidian) {
@@ -64,8 +68,35 @@ var Landing = React.createClass({
     );
   },
 
+  pearsonGuess: function(){
+    if(this.state.pearson === ""){
+      return <div />;
+    } else if (this.state.pearson) {
+      var newPet = "🐱";
+    } else {
+      newPet = "🐶";
+    }
+
+    return (
+      <label>You are a
+        <input
+          type="checkbox"
+          checked={this.state.pearson}
+          className="pearsonGuess"
+          style={{display:"none"}}
+          readOnly />
+        <span className="pet"> {newPet} </span>
+        lover!
+      </label>
+    );
+  },
+
   onChange: function(){
-    this.setState({euclidian: EntryStore.getEuclidianGuess("euclidian")});
+    var guesses = EntryStore.getGuesses();
+    this.setState({
+      euclidian: guesses["euclidian"],
+      pearson:guesses["pearson"]
+    });
   },
 
   render: function(){
@@ -104,7 +135,13 @@ var Landing = React.createClass({
         </p>
         {this.euclidianGuess()}
 
-        <h3>Pearson Distance</h3>
+        <h3>Pearson Correlation Score</h3>
+        <p>
+          The correlation coefficient is a measure of how well two sets of data fit on a straight line. Looking at the height and weight of users:
+        </p>
+        {this.pearsonGuess()}
+
+        <br />
         <button onClick={this.goToNewEntry}>Add More Entries</button>
       </div>
     );

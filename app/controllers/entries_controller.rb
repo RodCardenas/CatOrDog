@@ -46,6 +46,14 @@ class EntriesController < ApplicationController
     render json: {catLover: @result}
   end
 
+  def pearson
+    @result = Entry.pearsonCorrelationScoreGuess(
+      params[:entry][:height],
+      params[:entry][:weight]
+    )
+    render json: {catLover: @result}
+  end
+
   private
     def set_entry
       @entry = Entry.find(params[:id])

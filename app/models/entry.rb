@@ -30,4 +30,8 @@ class Entry < ActiveRecord::Base
     closest_match
   end
 
+  def self.pearsonCorrelationScoreGuess(height, weight)
+    height.to_i > 2 ? true : false
+  end
+
 end

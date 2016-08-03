@@ -71,10 +71,24 @@ module.exports =  {
   fetchEuclidianDistance: function(details){
     $.ajax({
       method: 'GET',
-      url: '/guess',
+      url: '/guess/euclidian',
       data: {entry: details},
       success: function(guess){
         EntryActions.euclidianDistance(guess);
+      },
+      error: function(error){
+        EntryActions.handleError(error);
+      }
+    });
+  },
+
+  fetchPearsonCorrelationScore: function(details){
+    $.ajax({
+      method: 'GET',
+      url: '/guess/pearson',
+      data: {entry: details},
+      success: function(guess){
+        EntryActions.pearsonCorrelationScore(guess);
       },
       error: function(error){
         EntryActions.handleError(error);
