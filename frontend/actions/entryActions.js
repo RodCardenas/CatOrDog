@@ -51,6 +51,13 @@ module.exports = {
     });
   },
 
+  allGuesses: function(guesses){
+    AppDispatcher.dispatch({
+      actionType: EntryConstants.ALL_GUESSES,
+      guesses: guesses
+    });
+  },
+
   handleError: function(error) {
     AppDispatcher.dispatch({
       actionType: EntryConstants.ENTRY_ERROR,

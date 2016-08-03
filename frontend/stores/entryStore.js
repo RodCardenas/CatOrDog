@@ -51,6 +51,10 @@ var setPearsonGuess = function(guess){
   _guesses["pearson"] = guess.catLover;
 };
 
+var setGuesses = function(guesses){
+  _guesses = guesses;
+};
+
 
 EntryStore.__onDispatch = function (payload) {
   switch(payload.actionType) {
@@ -86,6 +90,11 @@ EntryStore.__onDispatch = function (payload) {
 
     case EntryConstants.PEARSON:
       setPearsonGuess(payload.guess);
+      EntryStore.__emitChange();
+      break;
+
+    case EntryConstants.ALL_GUESSES:
+      setGuesses(payload.guesses);
       EntryStore.__emitChange();
       break;
 

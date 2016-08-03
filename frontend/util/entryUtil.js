@@ -94,5 +94,19 @@ module.exports =  {
         EntryActions.handleError(error);
       }
     });
+  },
+
+  fetchAllGuesses: function(details){
+    $.ajax({
+      method: 'GET',
+      url: '/guess/all',
+      data: {entry: details},
+      success: function(guess){
+        EntryActions.allGuesses(guess);
+      },
+      error: function(error){
+        EntryActions.handleError(error);
+      }
+    });
   }
 };

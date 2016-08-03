@@ -14,7 +14,7 @@
 class Entry < ActiveRecord::Base
   validates :height, :weight, presence: :true
 
-  def self.eucladianDistanceGuess(height, weight)
+  def self.euclidianDistanceGuess(height, weight)
     entries = Entry.all
     max_similarity_distance = 0
     closest_match = nil

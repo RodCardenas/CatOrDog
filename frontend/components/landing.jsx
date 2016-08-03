@@ -34,12 +34,7 @@ var Landing = React.createClass({
 
   getGuesses: function(event){
     event.preventDefault();
-    EntryUtil.fetchEuclidianDistance({
-      height:this.state.newHeight,
-      weight:this.state.newWeight
-    });
-
-    EntryUtil.fetchPearsonCorrelationScore({
+    EntryUtil.fetchAllGuesses({
       height:this.state.newHeight,
       weight:this.state.newWeight
     });
