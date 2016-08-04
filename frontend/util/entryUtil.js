@@ -101,8 +101,8 @@ module.exports =  {
       method: 'GET',
       url: '/guess/all',
       data: {entry: details},
-      success: function(guess){
-        EntryActions.allGuesses(guess);
+      success: function(guesses){
+        EntryActions.allGuesses(guesses);
       },
       error: function(error){
         EntryActions.handleError(error);

@@ -8,7 +8,7 @@ var Landing = React.createClass({
   },
 
   getInitialState: function(){
-    return {newHeight:"", newWeight:"", euclidian:"", pearson:""};
+    return {newHeight:1, newWeight:1, euclidian:"", pearson:"", errors:""};
   },
 
   componentDidMount: function(){
@@ -32,19 +32,34 @@ var Landing = React.createClass({
     this.context.router.push("/guesses");
   },
 
+  getErrors: function(){
+    return (
+      <div className="errors">
+        {this.state.errors}
+      </div>
+    );
+  },
+
   getGuesses: function(event){
     event.preventDefault();
-    EntryUtil.fetchAllGuesses({
-      height:this.state.newHeight,
-      weight:this.state.newWeight
-    });
+    if (this.state.newHeight <= 0){
+      this.setState({errors:"Height must be greater than 0."});
+    } else if (this.state.newWeight <= 0){
+      this.setState({errors:"Weight must be greater than 0."});
+    } else {
+      EntryUtil.fetchAllGuesses({
+        height:this.state.newHeight,
+        weight:this.state.newWeight
+      });
+      this.setState({errors:""});
+    }
   },
 
   euclidianGuess: function(){
     if(this.state.euclidian === ""){
-      return <div />;
+      var newPet = "？";
     } else if (this.state.euclidian) {
-      var newPet = "🐱";
+      newPet = "🐱";
     } else {
       newPet = "🐶";
     }
@@ -65,9 +80,9 @@ var Landing = React.createClass({
 
   pearsonGuess: function(){
     if(this.state.pearson === ""){
-      return <div />;
+      var newPet = "？";
     } else if (this.state.pearson) {
-      var newPet = "🐱";
+      newPet = "🐱";
     } else {
       newPet = "🐶";
     }
@@ -106,7 +121,8 @@ var Landing = React.createClass({
           <br/>
           <label>Height:
             <input
-              type="text"
+              type="number"
+              min="1"
               onChange={this.heightChange}
               value={this.state.newHeight}
               className="newHeight" />
@@ -114,12 +130,14 @@ var Landing = React.createClass({
           <br/>
           <label>Weight:
             <input
-              type="text"
+              type="number"
+              min="1"
               onChange={this.weightChange}
               value={this.state.newWeight}
               className="newWeight" />
           </label>
           <br/>
+          {this.getErrors()}
           <button onClick={this.getGuesses}>Get Guesses!</button>
         </div>
 
@@ -132,7 +150,7 @@ var Landing = React.createClass({
 
         <h3>Pearson Correlation Score</h3>
         <p>
-          The correlation coefficient is a measure of how well two sets of data fit on a straight line. Looking at the height and weight of users:
+          The correlation coefficient is a measure of how well two sets of data fit on a straight line. Looking at the weight-height ratio of users and their pet preference:
         </p>
         {this.pearsonGuess()}
 
