@@ -84,4 +84,8 @@ class Entry < ActiveRecord::Base
     r = (n * sxy - (sx * sy)) / Math.sqrt((n * sxx - (sx ** 2)) * (n * syy - (sy ** 2)))
   end
 
+  def self.tanimotoScoreGuess(height, weight)
+    height.to_i > 10 ? true : false
+  end
+
 end

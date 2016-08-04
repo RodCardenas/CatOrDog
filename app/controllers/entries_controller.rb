@@ -54,6 +54,14 @@ class EntriesController < ApplicationController
     render json: {catLover: @result}
   end
 
+  def tanimoto
+    @result = Entry.tanimotoScoreGuess(
+      params[:entry][:height],
+      params[:entry][:weight]
+    )
+    render json: {catLover: @result}
+  end
+
   def allGuesses
     height = params[:entry][:height]
     weight = params[:entry][:weight]
@@ -61,6 +69,7 @@ class EntriesController < ApplicationController
 
     @results["euclidian"] = Entry.euclidianDistanceGuess(height, weight)
     @results["pearson"] = Entry.pearsonCorrelationScoreGuess(height, weight)
+    @results["tanimoto"] = Entry.tanimotoScoreGuess(height, weight)
 
     render json: @results
   end

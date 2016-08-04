@@ -96,6 +96,20 @@ module.exports =  {
     });
   },
 
+  fetchTanimotoScore: function(details){
+    $.ajax({
+      method: 'GET',
+      url: '/guess/tanimoto',
+      data: {entry: details},
+      success: function(guess){
+        EntryActions.tanimotoScore(guess);
+      },
+      error: function(error){
+        EntryActions.handleError(error);
+      }
+    });
+  },
+
   fetchAllGuesses: function(details){
     $.ajax({
       method: 'GET',

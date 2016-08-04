@@ -51,6 +51,13 @@ module.exports = {
     });
   },
 
+  tanimotoScore: function(guess){
+    AppDispatcher.dispatch({
+      actionType: EntryConstants.TANIMOTO,
+      guess: guess
+    });
+  },
+
   allGuesses: function(guesses){
     AppDispatcher.dispatch({
       actionType: EntryConstants.ALL_GUESSES,

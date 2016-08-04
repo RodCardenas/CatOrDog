@@ -8,7 +8,7 @@ var Landing = React.createClass({
   },
 
   getInitialState: function(){
-    return {newHeight:1, newWeight:1, euclidian:"", pearson:"", errors:""};
+    return {newHeight:1, newWeight:1, euclidian:"", pearson:"", tanimoto:"", errors:""};
   },
 
   componentDidMount: function(){
@@ -101,11 +101,35 @@ var Landing = React.createClass({
     );
   },
 
+  tanimotoGuess: function(){
+    if(this.state.tanimoto === ""){
+      var newPet = "？";
+    } else if (this.state.tanimoto) {
+      newPet = "🐱";
+    } else {
+      newPet = "🐶";
+    }
+
+    return (
+      <label>You are a
+        <input
+          type="checkbox"
+          checked={this.state.tanimoto}
+          className="tanimotoGuess"
+          style={{display:"none"}}
+          readOnly />
+        <span className="pet"> {newPet} </span>
+        lover!
+      </label>
+    );
+  },
+
   onChange: function(){
     var guesses = EntryStore.getGuesses();
     this.setState({
       euclidian: guesses["euclidian"],
-      pearson:guesses["pearson"]
+      pearson:guesses["pearson"],
+      tanimoto:guesses["tanimoto"]
     });
   },
 
@@ -154,6 +178,13 @@ var Landing = React.createClass({
         </p>
         {this.pearsonGuess()}
 
+        <h3>Tanimoto Score</h3>
+        <p>
+          The Tanimoto score can be used to compare vectors which have binary attributes. In our case, we will use it to see if you like cats or dogs based on your weight to height ratio. Based on the Tanimoto score:
+        </p>
+        {this.tanimotoGuess()}
+
+        <br />
         <br />
         <button onClick={this.goToNewEntry}>Add More Entries</button>
       </div>
