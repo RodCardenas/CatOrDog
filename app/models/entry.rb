@@ -32,12 +32,12 @@ class Entry < ActiveRecord::Base
 
   def self.pearsonCorrelationScoreGuess(height, weight)
     # x = weight-height ratio
-    # y = pet preference 1 if catPerson, 0 if dogPerson
-    # Conceptually, x grows as the entry has more weight per unit of height and y will be present if the entry is a catLover.
+    # y = pet preference
+    # Conceptually, we check to see which set of entries the passed parameters have a stronger correlation with.
     # Therefore
-    # -1 = entries with more weight per unit of height tend to like dogs
+    # -1 = entries with more weight per unit of height tend to inversely like the set's pet
     # 0  = no relationship between weight-height and pet preference
-    # 1  = entries with more weight per unit of height tend to like cats
+    # 1  = entries with more weight per unit of height tend to like the set's pet
 
     entries = Entry.all
     guess = Entry.new(height: height.to_i, weight: weight.to_i, catLover: true)
@@ -85,7 +85,45 @@ class Entry < ActiveRecord::Base
   end
 
   def self.tanimotoScoreGuess(height, weight)
-    height.to_i > 10 ? true : false
+    # d(x,y) = x.y / ((|x|*|x|) + (|y|*|y|)- x.y)
+    # x = weight-height ratio
+    # y = pet preference 1 if catPerson, 0 if dogPerson
+    # Therefore
+    # 0  = no similarity is present
+    # 1  = identical taste
+
+    entries = Entry.all
+    avg_wgt_hgt = Entry.sum(:weight) / Entry.sum(:height)
+    avg_wgt = Entry.average(:weight)
+    avg_hgt = Entry.average(:weight)
+    vectors = []
+
+    entries.each do |entry|
+      wgt = entry.weight
+      hgt = entry.height
+      vector = []
+      vector << (wgt <= avg_wgt ? 1 : 0)
+      vector << (hgt <= avg_hgt ? 1 : 0)
+      vector << (wgt / hgt <= avg_wgt ? 1 : 0)
+      vector << entry.catLover
+      vectors << vector
+    end
+
+    catGuess = Entry.new(height: height.to_i, weight: weight.to_i, catLover: true)
+    catLoverScore = Entry.tanimotoMath(vectors, catGuess)
+
+    dogGuess = Entry.new(height: height.to_i, weight: weight.to_i, catLover: false)
+    dogLoverScore = Entry.tanimotoMath(vectors, dogGuess)
+
+    catLoverScore > dogLoverScore ? catLoverScore : dogLoverScore
+  end
+
+  def self.tanimotoMath(vectors, guess)
+    print vectors
+    # d(x,y) = n(X ∩ Y) / [ n(X) + n(Y) - n(X ∩ Y) ]
+
+    # a =
+    1
   end
 
 end

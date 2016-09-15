@@ -128,8 +128,8 @@ var Landing = React.createClass({
     var guesses = EntryStore.getGuesses();
     this.setState({
       euclidian: guesses["euclidian"],
-      pearson:guesses["pearson"],
-      tanimoto:guesses["tanimoto"]
+      pearson: guesses["pearson"],
+      tanimoto: guesses["tanimoto"]
     });
   },
 
